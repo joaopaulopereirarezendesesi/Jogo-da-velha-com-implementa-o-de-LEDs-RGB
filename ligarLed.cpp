@@ -33,6 +33,13 @@ void PosicaoControl::setPosicao(int num, int color, int lay) {
 
   uint8_t pinValues1[] = { 0, 0, 0 };
 
+  /*
+    How are we going to pass the values for the colors or positions as "1", "2", or "3"? I used "[color - 1]" 
+    and "[num - 1]" to translate that information to the array because if we passed the value as "color = 2 (Blue)" 
+    and "num = 2", it would light up the red color and the LED in position 3 on the display, since the counting 
+    starts from zero.
+  */
+
   if (color >= 1 && color <= 3) {
     pinValues1[0] = ledPatterns[color - 1][num - 1];
   } else if (color == 4) {
