@@ -41,7 +41,6 @@ void PosicaoControl::setPosicao(int num, int color, int lay) {
     pinValues1[1] = B11111111;
     pinValues1[2] = B00000011;
   } else if (color == 7) {
-    // No LEDs
   }
 
   sr.setAll(pinValues1);
