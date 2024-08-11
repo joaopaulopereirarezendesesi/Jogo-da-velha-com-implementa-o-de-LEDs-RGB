@@ -17,6 +17,11 @@ const int numRegisters = 3;
   0 = off.
 */
 
+/*
+  ledPatterns[colors][positions] = {
+  };
+*/
+
 void PosicaoControl::setPosicao(int num, int color, int lay) {
   static const uint8_t ledPatterns[3][9] = {
     { B00000001, B00000010, B00000100, B00001000, B00010000, B00100000, B01000000, B10000000, B00000000 },
