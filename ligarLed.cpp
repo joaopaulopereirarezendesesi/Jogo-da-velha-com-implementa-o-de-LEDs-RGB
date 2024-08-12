@@ -17,44 +17,66 @@ const int numRegisters = 3;
   0 = off.
 */
 
-/*
-  ledPatterns[colors][positions] = {
-  };
-*/
-
 void PosicaoControl::setPosicao(int num, int color, int lay) {
-  static const uint8_t ledPatterns[3][9] = {
-    { B00000001, B00000010, B00000100, B00001000, B00010000, B00100000, B01000000, B10000000, B00000000 },
-    { B00000000, B00000010, B00000100, B00001000, B00010000, B00100000, B01000000, B10000000, B00000000 },
-    { B00000001, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000 }
-  };
-
+  _numposicao = num;
+  _cor = color;
+  _dlay = lay;
   ShiftRegister74HC595<numRegisters> sr(dataPin, clockPin, latchPin);
 
-  uint8_t pinValues1[] = { 0, 0, 0 };
+  uint8_t pinValues1[3] = { B00000000, B00000000, B00000000 };
 
-  /*
-    How are we going to pass the values for the colors or positions as "1", "2", or "3" i used "[color - 1]" 
-    and "[num - 1]" to translate that information to the array because if we passed the value as "color = 2 (Blue)" 
-    and "num = 2", it would light up the red color and the LED in position 3 on the display, since the counting 
-    starts from zero.
-  */
-
-  if (color >= 1 && color <= 3) {
-    pinValues1[0] = ledPatterns[color - 1][num - 1];
-  } else if (color == 4) {
+  if (_cor == 1) {
+    switch (_numposicao) {
+      case 1: pinValues1[0] = B00000001; break;
+      case 2: pinValues1[0] = B00000010; break;
+      case 3: pinValues1[0] = B00000100; break;
+      case 4: pinValues1[0] = B00001000; break;
+      case 5: pinValues1[0] = B00010000; break;
+      case 6: pinValues1[0] = B00100000; break;
+      case 7: pinValues1[0] = B01000000; break;
+      case 8: pinValues1[0] = B10000000; break;
+      case 9: pinValues1[1] = B00000001; break;
+    }
+  } else if (_cor == 2) {
+    switch (_numposicao) {
+      case 1: pinValues1[1] = B00000010; break;
+      case 2: pinValues1[1] = B00000100; break;
+      case 3: pinValues1[1] = B00001000; break;
+      case 4: pinValues1[1] = B00010000; break;
+      case 5: pinValues1[1] = B00100000; break;
+      case 6: pinValues1[1] = B01000000; break;
+      case 7: pinValues1[1] = B10000000; break;
+      case 8: pinValues1[2] = B00000001; break;
+      case 9: pinValues1[2] = B00000010; break;
+    }
+  } else if (_cor == 3) {
+    switch (_numposicao) {
+      case 1: pinValues1[0] = B00000001; pinValues1[1] = B00000010; break;
+      case 2: pinValues1[0] = B00000010; pinValues1[1] = B00000100; break;
+      case 3: pinValues1[0] = B00000100; pinValues1[1] = B00001000; break;
+      case 4: pinValues1[0] = B00001000; pinValues1[1] = B00010000; break;
+      case 5: pinValues1[0] = B00010000; pinValues1[1] = B00100000; break;
+      case 6: pinValues1[0] = B00100000; pinValues1[1] = B01000000; break;
+      case 7: pinValues1[0] = B01000000; pinValues1[1] = B10000000; break;
+      case 8: pinValues1[0] = B10000000; pinValues1[2] = B00000001; break;
+      case 9: pinValues1[1] = B00000001; pinValues1[2] = B00000010; break;
+    }
+  } else if (_cor == 4) {
     pinValues1[1] = B11111110;
     pinValues1[2] = B00000011;
-  } else if (color == 5) {
+  } else if (_cor == 5) {
     pinValues1[0] = B11111111;
     pinValues1[1] = B00000001;
-  } else if (color == 6) {
+  } else if (_cor == 6) {
     pinValues1[0] = B11111111;
     pinValues1[1] = B11111111;
     pinValues1[2] = B00000011;
-  } else if (color == 7) {
+  } else if (_cor == 7) {
+    pinValues1[0] = B00000000;
+    pinValues1[1] = B00000000;
+    pinValues1[2] = B00000000;
   }
 
   sr.setAll(pinValues1);
-  delay(lay);
+  delay(_dlay);
 }
