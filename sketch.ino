@@ -22,7 +22,7 @@ void loading() {
 
 void setup() {
   Serial.begin(115200);
-  
+
   for (int i = 0; i < 9; i++) {
     pinMode(buttonPins[i], INPUT_PULLUP);
     buttons[i].attach(buttonPins[i]);
@@ -68,11 +68,14 @@ void loop() {
       buttons[i].update();
 
       if (buttons[i].fell()) {
-        int ledPosition = 9 - i; 
+        int ledPosition = 9 - i;
 
         if (board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] == 0) {
           board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] = player;
-          posCtrl.setPosicaoTicTacToe(ledPosition, player, 1000);
+
+          int resultado = posCtrl.setPosicaoTicTacToe(ledPosition, player, 1000);
+          Serial.println(resultado);
+        
           player = (player == 1) ? 2 : 1;
         }
       }
