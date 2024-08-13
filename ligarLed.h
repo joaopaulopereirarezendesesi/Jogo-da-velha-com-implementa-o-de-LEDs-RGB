@@ -8,7 +8,7 @@ private:
   int _cor;
 
 public:
-  void setPosicaoTicTacToe(int num, int color, int lay);
+  uint8_t* setPosicaoTicTacToe(int num, int color, int lay);
   void setPosicao(int num, int color, int lay);
 };
 
