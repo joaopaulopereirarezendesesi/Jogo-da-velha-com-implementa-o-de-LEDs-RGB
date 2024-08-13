@@ -11,13 +11,22 @@ ShiftRegister74HC595<numRegisters> sr(dataPin, clockPin, latchPin);
 
 uint8_t ledState[3] = { B00000000, B00000000, B00000000 };
 
-void PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
+bool compareArrays(const uint8_t* arr1, const uint8_t* arr2, size_t length) {
+  for (size_t i = 0; i < length; i++) {
+    if (arr1[i] != arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
   if (color == 7) {
     ledState[0] = B00000000;
     ledState[1] = B00000000;
     ledState[2] = B00000000;
   } else {
-    if (color == 1) { 
+    if (color == 1) {
       switch (num) {
         case 1: ledState[0] |= B00000001; break;
         case 2: ledState[0] |= B00000010; break;
@@ -41,7 +50,7 @@ void PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
         case 8: ledState[2] |= B00000001; break;
         case 9: ledState[2] |= B00000010; break;
       }
-    } else if (color == 3) { 
+    } else if (color == 3) {
       switch (num) {
         case 1: ledState[0] |= B00000001; ledState[1] |= B00000010; break;
         case 2: ledState[0] |= B00000010; ledState[1] |= B00000100; break;
@@ -53,11 +62,38 @@ void PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
         case 8: ledState[0] |= B10000000; ledState[2] |= B00000001; break;
         case 9: ledState[1] |= B00000001; ledState[2] |= B00000010; break;
       }
-    } 
+    }
   }
 
+  uint8_t patterns[15][3] = {
+    { B00000111, B00000000, B00000000 },
+    { B00111000, B00000000, B00000000 },
+    { B11000000, B00000001, B00000000 },
+    { B00000000, B00001110, B00000000 },
+    { B00000000, B01110000, B00000000 },
+    { B00000000, B10000000, B00000011 },
+    { B00010001, B00000001, B00000000 },
+    { B00000000, B00100010, B00000010 },
+    { B01010100, B00101010, B00000000 },
+    { B01001001, B00000000, B00000000 },
+    { B10010010, B00000000, B00000000 },
+    { B00100100, B00000001, B00000000 },
+    { B00000000, B10010010, B00000000 },
+    { B00000000, B00100100, B00000001 },
+    { B00000000, B01001000, B00000010 },
+  };
+
+  for (int i = 0; i < 15; i++) {
+    if (compareArrays(ledState, patterns[i], 3)) {
+      sr.setAll(ledState);
+      delay(lay);
+      return 1; 
+    }
+  }
   sr.setAll(ledState);
   delay(lay);
+
+  return 0;
 }
 
 void PosicaoControl::setPosicao(int num, int color, int lay) {
