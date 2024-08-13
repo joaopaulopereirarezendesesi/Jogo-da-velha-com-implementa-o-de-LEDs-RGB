@@ -1,14 +1,14 @@
 #include <Arduino.h>
+#include <Bounce2.h>
 #include "ligarLed.h"
 
 PosicaoControl posCtrl;
 
 int selectFunction;
 const int buttonPins[9] = {5, 6, 7, 8, 9, 10, 11, 12, 13};
-int buttonStates[9];
-int lastButtonStates[9];
-unsigned long lastDebounceTimes[9];
-unsigned long debounceDelay = 20;
+Bounce buttons[9];
+int player = 1;
+int board[3][3] = {0};
 
 void loading() {
   Serial.print("Loading: ");
@@ -21,13 +21,16 @@ void loading() {
 }
 
 void setup() {
-  for (int i = 0; i < 9; i++) {
-    pinMode(buttonPins[i], INPUT);
-    lastButtonStates[i] = LOW;
-    lastDebounceTimes[i] = 0;
-  }
-  randomSeed(analogRead(0));
   Serial.begin(115200);
+  
+  for (int i = 0; i < 9; i++) {
+    pinMode(buttonPins[i], INPUT_PULLUP);
+    buttons[i].attach(buttonPins[i]);
+    buttons[i].interval(20);
+  }
+
+  randomSeed(analogRead(0));
+
   Serial.println("Enter what you want to do with the display:");
   Serial.println("1 = Tic-Tac-Toe;");
   Serial.println("2 = Random Animation;");
@@ -61,40 +64,18 @@ void setup() {
 
 void loop() {
   if (selectFunction == 1) {
-    int player = 1;
-
-    int board[3][3] = {0};
-
-    for (int row = 0; row < 3; ++row) {
-      for (int col = 0; col < 3; ++col) {
-        int position = row * 3 + col + 1; 
-        int color = board[row][col];
-        posCtrl.setPosicao(position, color, 1000); 
-      }
-    }
-
     for (int i = 0; i < 9; i++) {
-      int reading = digitalRead(buttonPins[i]);
+      buttons[i].update();
 
-      if (reading != lastButtonStates[i]) {
-        lastDebounceTimes[i] = millis();
-      }
-      if ((millis() - lastDebounceTimes[i]) > debounceDelay) {
-        if (reading != buttonStates[i]) {
-          buttonStates[i] = reading;
+      if (buttons[i].fell()) {
+        int ledPosition = 9 - i; 
 
-          if (buttonStates[i] == HIGH) {
-            Serial.print("Button ");
-            Serial.print(i);
-            Serial.println(" pressed!");
-            int row = i / 3;
-            int col = i % 3;
-            board[row][col] = player;
-            player = (player == 1) ? 2 : 1;
-          }
+        if (board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] == 0) {
+          board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] = player;
+          posCtrl.setPosicaoTicTacToe(ledPosition, player, 1000);
+          player = (player == 1) ? 2 : 1;
         }
       }
-      lastButtonStates[i] = reading;
     }
   } else if (selectFunction == 2) {
     int numRandom6 = random(1, 7);
