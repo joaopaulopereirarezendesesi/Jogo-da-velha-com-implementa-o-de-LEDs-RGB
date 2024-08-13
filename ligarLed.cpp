@@ -11,9 +11,9 @@ ShiftRegister74HC595<numRegisters> sr(dataPin, clockPin, latchPin);
 
 uint8_t ledState[3] = { B00000000, B00000000, B00000000 };
 
-bool compareArrays(const uint8_t* arr1, const uint8_t* arr2, size_t length) {
+bool containsPattern(const uint8_t* arr, const uint8_t* pattern, size_t length) {
   for (size_t i = 0; i < length; i++) {
-    if (arr1[i] != arr2[i]) {
+    if ((arr[i] & pattern[i]) != pattern[i]) {
       return false;
     }
   }
@@ -21,11 +21,6 @@ bool compareArrays(const uint8_t* arr1, const uint8_t* arr2, size_t length) {
 }
 
 uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
-  if (color == 7) {
-    ledState[0] = B00000000;
-    ledState[1] = B00000000;
-    ledState[2] = B00000000;
-  } else {
     if (color == 1) {
       switch (num) {
         case 1: ledState[0] |= B00000001; break;
@@ -63,9 +58,8 @@ uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
         case 9: ledState[1] |= B00000001; ledState[2] |= B00000010; break;
       }
     }
-  }
 
-  uint8_t patterns[15][3] = {
+  uint8_t winningpatterns[15][3] = {
     { B00000111, B00000000, B00000000 },
     { B00111000, B00000000, B00000000 },
     { B11000000, B00000001, B00000000 },
@@ -84,10 +78,10 @@ uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
   };
 
   for (int i = 0; i < 15; i++) {
-    if (compareArrays(ledState, patterns[i], 3)) {
+    if (containsPattern(ledState, winningpatterns[i], 3)) {
       sr.setAll(ledState);
       delay(lay);
-      return 1; 
+      return 1;
     }
   }
   sr.setAll(ledState);
@@ -149,12 +143,16 @@ void PosicaoControl::setPosicao(int num, int color, int lay) {
     pinValues1[0] = B11111111;
     pinValues1[1] = B11111111;
     pinValues1[2] = B00000011;
-  } else if (_cor == 7) {
-    pinValues1[0] = B00000000;
-    pinValues1[1] = B00000000;
-    pinValues1[2] = B00000000;
   }
 
   sr.setAll(pinValues1);
   delay(_dlay);
+}
+
+void PosicaoControl::resetAllLeds() {
+  ledState[0] = B00000000;
+  ledState[1] = B00000000;
+  ledState[2] = B00000000;
+  
+  sr.setAll(ledState);
 }
