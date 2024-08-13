@@ -10,6 +10,7 @@ private:
 public:
   uint8_t* setPosicaoTicTacToe(int num, int color, int lay);
   void setPosicao(int num, int color, int lay);
+  void resetAllLeds();
 };
 
 #endif
