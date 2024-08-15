@@ -74,10 +74,10 @@ uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
     { B00100100, B00000001, B00000000 },
     { B00000000, B10010010, B00000000 },
     { B00000000, B00100100, B00000001 },
-    { B00000000, B01001000, B00000010 },
+    { B00000000, B10101000, B00000000 }
   };
 
-  for (int i = 0; i < 15; i++) {
+  for (int i = 0; i <= 15; i++) {
     if (containsPattern(ledState, winningpatterns[i], 3)) {
       sr.setAll(ledState);
       delay(lay);
