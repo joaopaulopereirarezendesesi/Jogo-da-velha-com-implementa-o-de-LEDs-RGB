@@ -56,12 +56,11 @@ void setup() {
   Serial.println("Enter what you want to do with the display:");
   Serial.println("1 = Tic-Tac-Toe;");
   Serial.println("2 = Random Animation;");
-  Serial.println("3 = Test mode.");
 
   while (selectFunction == 0) {
     if (Serial.available() > 0) {
       char received = Serial.read();
-      if (received >= '1' && received <= '3') {
+      if (received >= '1' && received <= '2') {
         selectFunction = received - '0';
         loading();
         Serial.print("Selected function: ");
@@ -81,14 +80,12 @@ void loop() {
 
   if (Serial.available() > 0) {
     char newSelection = Serial.read();
-    if (newSelection >= '1' && newSelection <= '3') {
+    if (newSelection >= '1' && newSelection <= '2') {
       selectFunction = newSelection - '0';
       loading();
       Serial.print("Function changed to: ");
       Serial.println(selectFunction);
-    } else {
-      Serial.println("Invalid selection. Please choose 1, 2, or 3.");
-    }
+    } 
     delay(100);
   }
 
@@ -142,20 +139,12 @@ void loop() {
       }
       break;
     case 2:
-      int randomLed = random(1, 10);
-      int randomColor = random(1, 8);
-      posCtrl.setPosicao(randomLed, randomColor, 500);
+      int randomLed = random(1, 9);
+      int randomColor = random(1, 7);
+      int randomTime = random(500, 1001);
+      posCtrl.setPosicao(randomLed, randomColor, randomTime);
       delay(1000);
       posCtrl.resetAllLeds();
-      break;
-    case 3:
-      for (int i = 1; i <= 9; i++) {
-        for (int j = 1; j <= 6; j++) {
-          posCtrl.setPosicao(i, j, 500);
-          delay(500);
-          posCtrl.resetAllLeds();
-        }
-      }
       break;
     default:
       Serial.println("Invalid selection. Please choose 1, 2, or 3.");
