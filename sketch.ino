@@ -4,7 +4,7 @@
 
 PosicaoControl posCtrl;
 
-int selectFunction = 0; 
+int selectFunction = 0;
 const int buttonPins[9] = { 5, 6, 7, 8, 9, 10, 11, 12, 13 };
 Bounce buttons[9];
 int player = 1;
@@ -28,7 +28,7 @@ void resetGame() {
     }
   }
   player = 1;
-  Serial.println("Game has been reset. Player 1's turn.");
+  Serial.println("Player 1's turn.");
 }
 
 bool isBoardFull(int board[3][3]) {
@@ -60,31 +60,14 @@ void setup() {
 
   while (selectFunction == 0) {
     if (Serial.available() > 0) {
-      int received = Serial.read();
-      if (received >= '0' && received <= '9') {
-        int parsedValue = received - '0';
-        if (parsedValue == 1 || parsedValue == 2 || parsedValue == 3) {
-          selectFunction = parsedValue;
-          Serial.print("Selected function: ");
-          Serial.println(selectFunction);
-          switch (selectFunction) {
-            case 1:
-              Serial.println("Starting Tic-Tac-Toe...");
-              loading();
-              resetGame();
-              break;
-            case 2:
-              Serial.println("Starting Random Animation...");
-              loading();
-              break;
-            case 3:
-              Serial.println("Starting test mode...");
-              loading();
-              break;
-          }
-        } else {
-          Serial.println("Invalid number. Enter 1, 2, or 3.");
-        }
+      char received = Serial.read();
+      if (received >= '1' && received <= '3') {
+        selectFunction = received - '0';
+        loading();
+        Serial.print("Selected function: ");
+        Serial.println(selectFunction);
+      } else {
+        Serial.println("Invalid number. Enter 1, 2, or 3.");
       }
       delay(100);
     }
@@ -92,74 +75,90 @@ void setup() {
 }
 
 void loop() {
-  if (selectFunction == 1) {
-    int thereisaWinner = 0;
-    old = 0;
-    do {
-      for (int i = 0; i < 9; i++) {
-        buttons[i].update();
+  if (selectFunction == 0) {
+    return;
+  }
 
-        if (buttons[i].fell()) {
-          int ledPosition = 9 - i;
+  if (Serial.available() > 0) {
+    char newSelection = Serial.read();
+    if (newSelection >= '1' && newSelection <= '3') {
+      selectFunction = newSelection - '0';
+      loading();
+      Serial.print("Function changed to: ");
+      Serial.println(selectFunction);
+    } else {
+      Serial.println("Invalid selection. Please choose 1, 2, or 3.");
+    }
+    delay(100);
+  }
 
-          if (board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] == 0) {
-            board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] = player;
-
-            int result = posCtrl.setPosicaoTicTacToe(ledPosition, player, 1000);
-
-            if (result == 1) {
-              Serial.print("The winner is player ");
-              Serial.print(player);
-              Serial.println("!");
-              thereisaWinner = 1;
-              if (player == 1) {
-                posCtrl.setPosicao(0, 5, 500);
-                posCtrl.setPosicao(0, 7, 500);
-                posCtrl.setPosicao(0, 5, 500);
-                posCtrl.resetAllLeds();
-              } else {
-                posCtrl.setPosicao(0, 4, 500);
-                posCtrl.setPosicao(0, 7, 500);
-                posCtrl.setPosicao(0, 4, 500);
-                posCtrl.resetAllLeds();
+  switch (selectFunction) {
+    case 1:
+      {
+        int thereisaWinner = 0;
+        old = 0;
+        while (thereisaWinner == 0 && old == 0) {
+          for (int i = 0; i < 9; i++) {
+            buttons[i].update();
+            if (buttons[i].fell()) {
+              int ledPosition = 9 - i;
+              if (board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] == 0) {
+                board[(ledPosition - 1) / 3][(ledPosition - 1) % 3] = player;
+                int result = posCtrl.setPosicaoTicTacToe(ledPosition, player, 1000);
+                if (result == 1) {
+                  Serial.print("The winner is player ");
+                  Serial.print(player);
+                  Serial.println("!");
+                  thereisaWinner = 1;
+                  if (player == 1) {
+                    posCtrl.setPosicao(0, 5, 500);
+                    posCtrl.setPosicao(0, 7, 500);
+                    posCtrl.setPosicao(0, 5, 500);
+                    posCtrl.resetAllLeds();
+                  } else {
+                    posCtrl.setPosicao(0, 4, 500);
+                    posCtrl.setPosicao(0, 7, 500);
+                    posCtrl.setPosicao(0, 4, 500);
+                    posCtrl.resetAllLeds();
+                  }
+                  delay(2000);
+                  resetGame();
+                } else if (isBoardFull(board)) {
+                  old = 1;
+                  Serial.println("It's a tie!");
+                  posCtrl.setPosicao(0, 6, 500);
+                  posCtrl.setPosicao(0, 7, 500);
+                  posCtrl.setPosicao(0, 6, 500);
+                  posCtrl.resetAllLeds();
+                  delay(2000);
+                  resetGame();
+                } else {
+                  player = (player == 1) ? 2 : 1;
+                }
               }
-              delay(2000);
-              resetGame();
-            } else if (isBoardFull(board)) {
-              old = 1;
-              Serial.println("got old");
-              posCtrl.setPosicao(0, 6, 500);
-              posCtrl.setPosicao(0, 7, 500);
-              posCtrl.setPosicao(0, 6, 500);
-              posCtrl.resetAllLeds();
-              delay(2000);
-              resetGame();
-            } else {
-              player = (player == 1) ? 2 : 1;
             }
           }
         }
       }
-    } while (thereisaWinner == 1 || old == 1);
-  } else if (selectFunction == 2) {
-    int numRandom6 = random(1, 7);
-    int numRandom9 = random(1, 10);
-    int numRandom500 = random(100, 1001);
-
-    posCtrl.setPosicao(numRandom9, numRandom6, numRandom500);
-  } else if (selectFunction == 3) {
-    posCtrl.setPosicao(1, 1, 1000);
-    posCtrl.setPosicao(2, 2, 1000);
-    posCtrl.setPosicao(3, 3, 1000);
-    posCtrl.setPosicao(4, 1, 1000);
-    posCtrl.setPosicao(5, 2, 1000);
-    posCtrl.setPosicao(6, 3, 1000);
-    posCtrl.setPosicao(7, 1, 1000);
-    posCtrl.setPosicao(8, 2, 1000);
-    posCtrl.setPosicao(9, 3, 1000);
-    posCtrl.setPosicao(0, 4, 1000);
-    posCtrl.setPosicao(0, 5, 1000);
-    posCtrl.setPosicao(0, 6, 1000);
-    posCtrl.setPosicao(0, 7, 1000);
+      break;
+    case 2:
+      int randomLed = random(1, 10);
+      int randomColor = random(1, 8);
+      posCtrl.setPosicao(randomLed, randomColor, 500);
+      delay(1000);
+      posCtrl.resetAllLeds();
+      break;
+    case 3:
+      for (int i = 1; i <= 9; i++) {
+        for (int j = 1; j <= 6; j++) {
+          posCtrl.setPosicao(i, j, 500);
+          delay(500);
+          posCtrl.resetAllLeds();
+        }
+      }
+      break;
+    default:
+      Serial.println("Invalid selection. Please choose 1, 2, or 3.");
+      break;
   }
 }
