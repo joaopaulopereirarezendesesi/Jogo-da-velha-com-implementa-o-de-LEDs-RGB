@@ -1,18 +1,52 @@
-# Jogo da velha com implementação de LEDs RGB
+# 🕹️ Jogo da Velha com LEDs e Animações 💡
 
-O objetivo desses codigo é fazer um jogo da velha com LEDs RGB, para fazer isso eu utilizei de um Shiftregister, mais expecificamente o 74HC595 e de praxe a biblioteca dele a "ShiftRegister74HC595.h".
+Este projeto utiliza um Arduino para controlar LEDs em um jogo da velha e exibir animações aleatórias. O controle dos LEDs é feito com a ajuda de um registrador de deslocamento 74HC595.
 
-## Programação base 
+## 📁 Estrutura do Projeto
 
-A programação base se trata de como eu iria fazer os LEDs acenderem, e foi "simplismente" usar a biblioteca, para começar eu tinha que definir qual a condiguração de bits que controla as cores LED, a configuração que 
-eu cheguei foi a seguinte:
+O projeto é composto pelos seguintes arquivos:
 
-```c++
- { B00000000, B00000000, B00000000 };
- { Brrrrrrrr, Bbbbbbbbr, B------bb };
-  r = Red;
-  b = Blue.
-  1 = connected;
-  0 = off.
-```
+1. **Código Principal (`Mein.ino`)**
+2. **Biblioteca de Controle de LEDs (`ligarLed.h` e `ligarLed.cpp`)**
 
+### 📜 Código Principal (`Mein.ino`)
+
+O código principal configura botões para interagir com o jogo da velha e também permite a exibição de animações aleatórias.
+
+#### 🚀 Funções Importantes:
+
+- **`setup()`**: Configura a comunicação Serial, os botões e aguarda a seleção da função do display (1 para Jogo da Velha, 2 para Animação Aleatória).
+
+- **`loop()`**: Gerencia a lógica do jogo da velha ou a exibição de animações baseadas na seleção feita pelo usuário.
+
+  - **🕹️ Jogo da Velha**: Atualiza o tabuleiro com base nos botões pressionados e verifica padrões de vitória. Reinicia o jogo se necessário.
+
+  - **✨ Animação Aleatória**: Acende LEDs em posições e cores aleatórias por um tempo definido.
+
+### 💡 Biblioteca de Controle de LEDs
+
+Esta biblioteca define a classe `PosicaoControl`, que gerencia o controle dos LEDs através do registrador 74HC595.
+
+#### Arquivos:
+
+- **`ligarLed.h`**: Define a interface da classe `PosicaoControl`.
+
+  ```cpp
+  #ifndef LIGARLED_H
+  #define LIGARLED_H
+
+  #include <Arduino.h>
+
+  class PosicaoControl {
+  private:
+    int _dlay;          // Delay em milissegundos
+    int _numposicao;    // Número da posição do LED
+    int _cor;           // Cor do LED
+
+  public:
+    uint8_t* setPosicaoTicTacToe(int num, int color, int lay);
+    void setPosicao(int num, int color, int lay);
+    void resetAllLeds();
+  };
+
+  #endif // LIGARLED_H
