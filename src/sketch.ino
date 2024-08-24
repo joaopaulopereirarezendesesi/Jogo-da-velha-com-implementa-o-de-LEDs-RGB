@@ -106,6 +106,7 @@ void loop() {
         resetGame();
         posCtrl.resetAllLeds();
         while (gameOver == 0 && oldGameState == 0) {
+          posCtrl.players(player);  // Adicionando ponto e vírgula
           for (int i = 0; i < 9; i++) {
             buttons[i].update();
             if (buttons[i].fell()) {
@@ -128,8 +129,8 @@ void loop() {
                 } else if (isBoardFull()) {
                   oldGameState = 1;
                   Serial.println("It's a tie!");
-                  posCtrl.setPosicao(0, 6, 500);
-                  posCtrl.setPosicao(0, 7, 500);
+                  posCtrl.setPosicao(0, 6, 500); 
+                  posCtrl.setPosicao(0, 7, 500); 
                   posCtrl.setPosicao(0, 6, 500);
                   posCtrl.resetAllLeds();
                   delay(2000);
