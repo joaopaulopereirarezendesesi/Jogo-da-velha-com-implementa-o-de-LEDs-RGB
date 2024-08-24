@@ -85,7 +85,7 @@ uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
     };
 
     // Verificar se há um padrão de vitória
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 17; i++) {
         if (containsPattern(ledState, winningpatterns[i], 3)) {
             sr.setAll(ledState);
             delay(lay);
