@@ -161,9 +161,6 @@ void PosicaoControl::setPosicao(int num, int color, int lay) {
 
 // Função para resetar todos os LEDs
 void PosicaoControl::resetAllLeds() {
-    ledState[0] = B00000000;
-    ledState[1] = B00000000;
-    ledState[2] = B00000000;
-
+    ledState[0] = B00000000; ledState[1] = B00000000; ledState[2] = B00000000;
     sr.setAll(ledState);
 }
