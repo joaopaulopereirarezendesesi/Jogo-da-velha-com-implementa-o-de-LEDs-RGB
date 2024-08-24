@@ -103,6 +103,8 @@ void loop() {
       {
         int gameOver = 0;
         oldGameState = 0;
+        resetGame();
+        posCtrl.resetAllLeds();
         while (gameOver == 0 && oldGameState == 0) {
           for (int i = 0; i < 9; i++) {
             buttons[i].update();
