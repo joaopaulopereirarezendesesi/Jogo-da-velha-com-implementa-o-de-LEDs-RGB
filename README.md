@@ -46,7 +46,7 @@ O projeto é composto por três arquivos principais:
 1. Clone o repositório:
    
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB
    ```
 3. Abra o projeto no Arduino IDE ou na sua IDE preferida.
 4. Instale as bibliotecas necessárias através do Gerenciador de Bibliotecas.
