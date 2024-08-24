@@ -52,7 +52,7 @@ O projeto é composto por três arquivos principais:
 4. Instale as bibliotecas necessárias através do Gerenciador de Bibliotecas.
 5. Compile e carregue o código no seu Arduino.
 
-> Caso queira testar já com um hardware entre no meu projeto do Wokwi: [Projeto de jogo da velha com LEDs RGB](https://wokwi.com/projects/400801421156964353)
+> Caso queira testar já com um hardware já montado entre no meu projeto do Wokwi: [Projeto de jogo da velha com LEDs RGB](https://wokwi.com/projects/400801421156964353)
 
 ## 💡 Como Usar
 
