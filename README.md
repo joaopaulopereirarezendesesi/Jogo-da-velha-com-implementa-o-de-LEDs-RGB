@@ -1,7 +1,6 @@
 # 🎮 Tic-Tac-Toe com LEDs no Arduino
 
-> Este projeto implementa um jogo da velha usando LEDs controlados por um Arduino. Além do jogo da velha, há uma função de animação aleatória para os LEDs. O projeto utiliza um registrador de deslocamento 74HC595 para controlar os LEDs e a
-> biblioteca `Bounce2` para gerenciar os botões.
+> Este projeto implementa um jogo da velha usando LEDs controlados por um Arduino. Além do jogo da velha, há uma função de animação aleatória para os LEDs. O projeto utiliza um registrador de deslocamento 74HC595 para controlar os LEDs e a biblioteca `Bounce2` para gerenciar os botões.
 
 ## 📝 Descrição do Projeto
 
