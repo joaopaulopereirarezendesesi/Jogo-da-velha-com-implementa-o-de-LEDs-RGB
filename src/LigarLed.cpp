@@ -177,13 +177,3 @@ void PosicaoControl::resetAllLeds() {
 
   sr.setAll(ledState);
 }
-
-void PosicaoControl::players(int color) {
-  _cor = color;
-  if (color == 1) {
-    ledState[2] = B00001000;
-  } else {
-    ledState[2] = B00000100;
-  }
-  sr.setAll(ledState);
-}
