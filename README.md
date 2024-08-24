@@ -7,7 +7,7 @@
 
 O projeto é composto por três arquivos principais:
 
-1. `main.cpp` - O código principal que controla o jogo da velha e a animação aleatória.
+1. `main.ino` - O código principal que controla o jogo da velha e a animação aleatória.
 2. `ligarLed.h` - Cabeçalho da classe `PosicaoControl`, que gerencia os LEDs.
 3. `ligarLed.cpp` - Implementação da classe `PosicaoControl`, que inclui a lógica de controle dos LEDs e a verificação dos padrões de vitória.
 
