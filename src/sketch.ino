@@ -106,7 +106,6 @@ void loop() {
         resetGame();
         posCtrl.resetAllLeds();
         while (gameOver == 0 && oldGameState == 0) {
-          posCtrl.players(player);  // Adicionando ponto e vírgula
           for (int i = 0; i < 9; i++) {
             buttons[i].update();
             if (buttons[i].fell()) {
