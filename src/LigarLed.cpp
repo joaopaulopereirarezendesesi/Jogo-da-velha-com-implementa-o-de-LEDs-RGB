@@ -148,15 +148,11 @@ void PosicaoControl::setPosicao(int num, int color, int lay) {
             case 9: pinValues1[1] = B00000001; pinValues1[2] = B00000010; break;
         }
     } else if (_cor == 4) {
-        pinValues1[1] = B11111110;
-        pinValues1[2] = B00000011;
+        pinValues1[1] = B11111110; pinValues1[2] = B00000011;
     } else if (_cor == 5) {
-        pinValues1[0] = B11111111;
-        pinValues1[1] = B00000001;
+        pinValues1[0] = B11111111; pinValues1[1] = B00000001;
     } else if (_cor == 6) {
-        pinValues1[0] = B11111111;
-        pinValues1[1] = B11111111;
-        pinValues1[2] = B00000011;
+        pinValues1[0] = B11111111; pinValues1[1] = B11111111; pinValues1[2] = B00000011;
     }
 
     sr.setAll(pinValues1);
