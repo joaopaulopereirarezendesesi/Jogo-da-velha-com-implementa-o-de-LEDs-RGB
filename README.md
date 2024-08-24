@@ -31,7 +31,7 @@ O projeto é composto por três arquivos principais:
 
 - **Hardware**:
   - Arduino
-  - Registrador de deslocamento 74HC595
+  - Registradores de deslocamento 74HC595
   - LEDs
   - Botões
   - Resistores
