@@ -65,7 +65,7 @@ O projeto é composto por três arquivos principais:
 
 ## 🛠️ Personalização
 
-- Modifique as cores e o tempo de delay na função `setPosicao()` no arquivo `ligarLed.cpp` para personalizar as animações e as cores dos LEDs.
+- Modifique as cores e o tempo de delay na função `setPosicao()` no arquivo `main.ino` para personalizar as animações e as cores dos LEDs.
 - Adicione novos padrões de vitória ou mude o comportamento do jogo na função `setPosicaoTicTacToe()`.
 
 ## 📜 Licença
