@@ -71,7 +71,7 @@ O projeto é composto por três arquivos principais:
 
 ## 📜 Licença
 
-Este projeto está licenciado sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+Este projeto está licenciado sob a licença MIT. Veja o arquivo [`LICENSE`](https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB/blob/main/LICENSE) para mais detalhes.
 
 ## 📝 Criador
 
