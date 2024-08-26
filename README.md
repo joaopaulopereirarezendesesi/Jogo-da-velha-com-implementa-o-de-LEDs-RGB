@@ -6,9 +6,9 @@
 
 O projeto é composto por três arquivos principais:
 
-1. [`main.ino`](https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB/blob/main/src/sketch.ino) - O código principal que controla o jogo da velha e a animação aleatória.
-2. [`ligarLed.h`](https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB/blob/main/src/LigarLed.h) - Cabeçalho da classe `PosicaoControl`, que gerencia os LEDs.
-3. [`ligarLed.cpp`](https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB/blob/main/src/sketch.ino) - Implementação da classe `PosicaoControl`, que inclui a lógica de controle dos LEDs e a verificação dos padrões de vitória.
+1. [`main.ino`](https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB/blob/main/src/sketch.ino): O código principal que controla o jogo da velha e a animação aleatória.
+2. [`ligarLed.h`](https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB/blob/main/src/LigarLed.h): Cabeçalho da classe `PosicaoControl`, que gerencia os LEDs.
+3. [`ligarLed.cpp`](https://github.com/joaopaulopereirarezendesesi/Jogo-da-velha-com-implementa-o-de-LEDs-RGB/blob/main/src/sketch.ino):Implementação da classe `PosicaoControl`, que inclui a lógica de controle dos LEDs e a verificação dos padrões de vitória.
 
 ## 📂 Estrutura dos Arquivos
 
