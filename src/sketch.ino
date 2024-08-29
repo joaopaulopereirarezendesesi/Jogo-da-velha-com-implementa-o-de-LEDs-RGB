@@ -118,22 +118,20 @@ void loop() {
                   gameOver = 1;
                   if (player == 1) {
                     posCtrl.setPosicao(0, 5, 1000);
-                    posCtrl.resetAllLeds();
                   } else {
                     posCtrl.setPosicao(0, 4, 1000);
-                    posCtrl.resetAllLeds();
                   }
-                  delay(2000);
+                  posCtrl.resetAllLeds();
                   resetGame();
+                  delay(2000);
                 } else if (isBoardFull()) {
                   oldGameState = 1;
                   Serial.println("It's a tie!");
-                  posCtrl.setPosicao(0, 6, 500); 
-                  posCtrl.setPosicao(0, 7, 500); 
                   posCtrl.setPosicao(0, 6, 500);
+                  posCtrl.setPosicao(0, 7, 500);
                   posCtrl.resetAllLeds();
-                  delay(2000);
                   resetGame();
+                  delay(2000);
                 } else {
                   player = (player == 1) ? 2 : 1;
                 }
