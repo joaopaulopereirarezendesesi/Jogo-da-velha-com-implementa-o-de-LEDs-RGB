@@ -58,18 +58,6 @@ uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
       case 8: ledState[2] |= B00000001; break;
       case 9: ledState[2] |= B00000010; break;
     }
-  } else if (color == 3) {
-    switch (num) {
-      case 1: ledState[0] |= B00000001; ledState[1] |= B00000010; break;
-      case 2: ledState[0] |= B00000010; ledState[1] |= B00000100; break;
-      case 3: ledState[0] |= B00000100; ledState[1] |= B00001000; break;
-      case 4: ledState[0] |= B00001000; ledState[1] |= B00010000; break;
-      case 5: ledState[0] |= B00010000; ledState[1] |= B00100000; break;
-      case 6: ledState[0] |= B00100000; ledState[1] |= B01000000; break;
-      case 7: ledState[0] |= B01000000; ledState[1] |= B10000000; break;
-      case 8: ledState[0] |= B10000000; ledState[2] |= B00000001; break;
-      case 9: ledState[1] |= B00000001; ledState[2] |= B00000010; break;
-    }
   } else if (color == 4) {
     ledState[1] = B11111110; ledState[2] = B00000011;
   } else if (color == 5) {
