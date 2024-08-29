@@ -23,14 +23,6 @@ bool containsPattern(const uint8_t* arr, const uint8_t* pattern, size_t length) 
   return true;
 }
 
-bool isBitActive(uint8_t ledState, int num) {
-  // Cria a máscara de bit para o bit específico
-  uint8_t bitmask = 1 << (num - 1);  // Ajusta o bitmask para verificar o bit correto (num - 1)
-
-  // Verifica se o bit está ativado
-  return (ledState & bitmask) != 0;
-}
-
 // Função para configurar a posição no jogo da velha
 uint8_t* PosicaoControl::setPosicaoTicTacToe(int num, int color, int lay) {
   // Atualizar o estado dos LEDs com base na cor e posição
